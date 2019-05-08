@@ -14,7 +14,21 @@ def calculateCuadraticError(x,y,t):
     for i in range(N):
         suma+=(h[i]-y[i])*(h[i]-y[i])
     return (suma*(1/N))
-    
+
+def getTethasWithGradientD(x,y,t,alpha,iterations):
+     m=len(y)
+     h=np.dot(x,t)
+     
+     for it in range(iterations):
+         temporal=np.copy(t)
+         for j in range(t.shape[0]):
+             suma=0
+             for i in range(m):
+                 suma+=(h[i][0]-y[i])*x[i][j]
+             temporal[j]=t[j]-alpha*(1/m)*suma
+         t=np.copy(temporal)
+         print("iteration number:"+str(it)+"cuadratic error:"+str(calculateCuadraticError(x,y,t)))               
+     return t
 
 #leemos los datos
 data=np.loadtxt("blood_pressure.txt",dtype=int)
@@ -49,3 +63,16 @@ t=np.ones((x.shape[1],1))
 
 #probando la funcion de error creada
 #calculateCuadraticError(x,y,t)
+
+#probamos la funcion de gradiente descendiente
+newTethas=getTethasWithGradientD(x,y,t,0.1,100)
+print(newTethas)
+#ya tenemos las nuevas tethas obtenidas a partir del algoritmo
+#ahora probamos el error
+xt=np.copy(test[:,0])
+xt=np.c_[np.ones(len(test)),xt]
+y=np.copy(test[:,1])
+
+print(calculateCuadraticError(xt,y,newTethas))
+
+##PORQUE ESTA AUMENTANDO EL ERROR A MEDIDA QUE SUCEDEN LAS ITERACIONESs
