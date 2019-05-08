@@ -14,7 +14,7 @@ def calculateCuadraticError(x,y,t):
     for i in range(N):
         suma+=(h[i]-y[i])*(h[i]-y[i])
     return (suma*(1/N))
-
+#
 def getTethasWithGradientD(x,y,t,alpha,iterations):
      m=len(y)
      h=np.dot(x,t)
