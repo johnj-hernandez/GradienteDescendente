@@ -17,17 +17,20 @@ def calculateCuadraticError(x,y,t):
 #
 def getTethasWithGradientD(x,y,t,alpha,iterations):
      m=len(y)
-     h=np.dot(x,t)
-     
      for it in range(iterations):
          temporal=np.copy(t)
+         h=np.dot(x,t)
          for j in range(t.shape[0]):
              suma=0
              for i in range(m):
-                 suma+=(h[i][0]-y[i])*x[i][j]
-             temporal[j]=t[j]-alpha*(1/m)*suma
+                 suma=(h[i][0]-y[i])*x[i][j]*(1/m)+suma
+             #print("Suma: "+str(suma))
+             temporal[j]=t[j]-alpha*suma
+             
          t=np.copy(temporal)
-         print("iteration number:"+str(it)+"cuadratic error:"+str(calculateCuadraticError(x,y,t)))               
+         #print(t)
+         print("iteration number:"+str(it)+"cuadratic error:"+str(calculateCuadraticError(x,y,t)))  
+         #print("los valores de tetha actuales son:"+str(t))
      return t
 
 #leemos los datos
@@ -65,8 +68,8 @@ t=np.ones((x.shape[1],1))
 #calculateCuadraticError(x,y,t)
 
 #probamos la funcion de gradiente descendiente
-newTethas=getTethasWithGradientD(x,y,t,0.1,100)
-print(newTethas)
+newTethas=getTethasWithGradientD(x,y,t,0.0000001,100000)
+#print(newTethas)
 #ya tenemos las nuevas tethas obtenidas a partir del algoritmo
 #ahora probamos el error
 xt=np.copy(test[:,0])
@@ -74,5 +77,9 @@ xt=np.c_[np.ones(len(test)),xt]
 y=np.copy(test[:,1])
 
 print(calculateCuadraticError(xt,y,newTethas))
+tprueba=np.array([0.1,0.5])
+hprueba=np.dot(x,tprueba)
 
-##PORQUE ESTA AUMENTANDO EL ERROR A MEDIDA QUE SUCEDEN LAS ITERACIONESs
+
+
+
