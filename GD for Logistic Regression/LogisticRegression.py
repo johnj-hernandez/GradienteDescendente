@@ -32,6 +32,7 @@ data=np.loadtxt("grades_data.txt",dtype=float,delimiter=",")
 p70=int(len(data)*0.7)
 train=data[:p70,:]
 test=data[p70:,:]
+#preparamos los datos de entrenamiento
 x=np.copy(train[:,0:2])
 x=np.c_[np.ones(p70),x]
 y=np.copy(train[:,2])
@@ -43,8 +44,9 @@ xt=np.c_[np.ones(len(test)),xt]
 yt=np.copy(test[:,2])
 
 
+alpha=0.005
 #probamos la funcion de gradiente descendiente
-newTethas=getTethasWithGradientD(x,y,t,0.01,100000)
+newTethas=getTethasWithGradientD(x,y,t,alpha,200000)
 
 #ya tenemos los tethas ahora obtenemos las predicciones
 zt=np.dot(xt,newTethas)
@@ -53,7 +55,8 @@ probabilidades=sigmoid(zt)
 predicciones=np.copy(probabilidades)
 for i in range(len(probabilidades)):  predicciones[i]=0 if (probabilidades[i]<=0.5) else 1
 #predicciones.reshape((len(predicciones)))
-(predicciones==yt).mean()
+print("alpha:"+str(alpha))
+print((predicciones==yt).mean())
 
 
 
