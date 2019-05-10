@@ -35,12 +35,29 @@ test=data[p70:,:]
 #preparamos los datos de entrenamiento
 x=np.copy(train[:,0:2])
 x=np.c_[np.ones(p70),x]
+#agregamos dos columnas mas por que hay 2 features que elevaremos al cuadrado
+x=np.c_[
+        x[:,0],        
+        x[:,1],
+        x[:,1]*x[:,1],
+        x[:,2],
+        x[:,2]*x[:,2]
+        ]
+
+
 y=np.copy(train[:,2])
 t=np.ones((x.shape[1],1))
 
 #----------TEST DATA----------------------
 xt=np.copy(test[:,0:2])
 xt=np.c_[np.ones(len(test)),xt]
+xt=np.c_[
+        xt[:,0],        
+        xt[:,1],
+        xt[:,1]*xt[:,1],
+        xt[:,2],
+        xt[:,2]*xt[:,2]
+        ]
 yt=np.copy(test[:,2])
 
 
