@@ -28,7 +28,7 @@ def getTethasWithGradientD(x,y,t,alpha,iterations):
 
 #leemos los datos
 data=np.loadtxt("grades_data.txt",dtype=float,delimiter=",")
-#calculamos el numero de datos que representan el 70%
+#calculamos el numero de datos que representan el 70% y realizamos la particion
 p70=int(len(data)*0.7)
 train=data[:p70,:]
 test=data[p70:,:]
